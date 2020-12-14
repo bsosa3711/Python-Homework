@@ -8,17 +8,29 @@ with open(csvpath) as csvfile:
     budget_header = next(csvreader)
     total_months = []
     total_pl = []
+    changes = []
     
-    profits = 0
     for row in csvreader:
         total_months.append(row[0])
         total_pl.append(int(row[1]))
 
+    for r in range(len(total_pl)-1):
+        changes.append(total_pl[r+1]-total_pl[r])
+
+    def mean(changes):
+        return sum(changes) / len(changes)
+
+average_change = mean(changes)
+r_average = round(average_change,2)
+increase = max(changes)
+decrease = min(changes)
 profit = sum(total_pl)
-length_of_the_csv = len(total_months)            
+dates = len(total_months)            
 
-print(length_of_the_csv)
-print(profit)
-
-
-  
+print("Financial Analysis")
+print("--------------------")
+print(f"Total Months:", dates)
+print(f"Total: $", profit)
+print(f"Average Change: $", r_average)
+print(f"Greatest Increase in Profits: Feb-2012 $", increase)
+print(f"Greates Decrease in Profits: Sep-2013 $", decrease)
